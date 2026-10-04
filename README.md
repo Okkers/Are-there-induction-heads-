@@ -46,11 +46,11 @@ Test sets modify the distribution to separate hypotheses:
 
 **Out-of-context conditions** (induction vs. positional heuristic)
 
-![OOC results](figures/out_of_context.png)
+<img width="1034" height="515" alt="test_out_of_context" src="https://github.com/user-attachments/assets/ef1b5a03-7f66-4801-ac02-b6e1f6f565dd" />
 
 **Prefix length**
 
-![Prefix length](figures/prefix_length.png)
+<img width="888" height="508" alt="test_by_prefix_length" src="https://github.com/user-attachments/assets/b5dd5e67-6feb-44f5-86d4-ddccb47f8871" />
 
 **Gap length**
 
@@ -58,9 +58,9 @@ Test sets modify the distribution to separate hypotheses:
 
 Training loss converges to ~0.25 (not 0), as expected for a partly stochastic task: see `figures/training_loss.png`.
 
-
-
 **Attention Patterns**
+
+<img width="2176" height="1152" alt="attention_patterns" src="https://github.com/user-attachments/assets/0ad9d738-44cd-4e3a-937b-40e635b4932e" />
 
 ## Model and training
 
