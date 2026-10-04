@@ -1,3 +1,5 @@
+<img width="1188" height="508" alt="test_gap_length" src="https://github.com/user-attachments/assets/088f743d-50f1-4c31-b79a-f8dca0c27f70" />
+<img width="1188" height="508" alt="test_gap_length" src="https://github.com/user-attachments/assets/1d432d2c-d6d2-4fb8-a878-ab60c816edcb" />
 # Are there induction heads in smaller transformers?
 
 A controlled synthetic dataset for behaviorally testing whether a small transformer learns an induction-style mechanism ("if `A → B` appeared earlier and `A` appears again, predict `B`"), and whether it also relies on a positional shortcut.
@@ -54,7 +56,7 @@ Test sets modify the distribution to separate hypotheses:
 
 **Gap length**
 
-![Gap length](figures/gap_length.png)
+<img width="1188" height="508" alt="test_gap_length" src="https://github.com/user-attachments/assets/913e16cd-a035-417d-b7fd-a10c1718d77c" />
 
 Training loss converges to ~0.25 (not 0), as expected for a partly stochastic task: see `figures/training_loss.png`.
 
