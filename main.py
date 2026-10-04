@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 import random
+import os 
 import numpy as np
 from toy_model import ToyTransformer
 from create_dataset import get_training_or_val_batch, generate_training_sequence, generate_test_sequence, vocabulary
@@ -16,13 +17,16 @@ EVAL_SAMPLES = 1000
 TEST_SAMPLES = 500
 GAP_LENGTHS = [1, 2, 3, 5, 8, 13, 20]
 PREFIX_LENGTHS = [2, 3, 4, 5]
-CHECKPOINT = "checkpoints/checkpoint.pth"
+CHECKPOINT_DIR = "checkpoints/"
+CHECKPOINT = "checkpoints/checkpoint.pt"
 RESULT_FILE = "result.txt"
 TRIALS = 10
 
 random.seed(SEED)
 torch.manual_seed(SEED)
 np.random.seed(SEED)
+
+os.makedirs(CHECKPOINT_DIR, exist_ok=True)
 
 def write(f, s):
     print(s)
@@ -75,7 +79,6 @@ def run_experiments_once(model):
                 pred = model(x).argmax(dim=-1)
                 hits.append(pred.item() == y.item())
             acc_by_gap[gap] = sum(hits) / len(hits)
-
 
     acc_by_prefix = {}
     with torch.no_grad():

@@ -1,5 +1,7 @@
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
+import os 
+import numpy as np
 
 BG       = "#0d0d0f"
 PANEL    = "#16161a"
@@ -29,6 +31,12 @@ plt.rcParams.update({
     "legend.edgecolor":  GRID,
     "legend.labelcolor": TEXT,
 })
+
+CONDITIONS = {
+    "standard": "prefix_length",
+    "ooc_pos": "out_of_context_pos",
+    "ooc_no_pos": "out_of_context_no_pos",
+}
 
 CHANCE = 1 / 10
 
@@ -232,3 +240,39 @@ def plot_summary(losses, acc_by_prefix, acc_by_gap, acc_standard, acc_ooc_pos, a
     fig.savefig(save_path, dpi=150, bbox_inches="tight")
     plt.close(fig)
     print(f"[plot] saved → {save_path}")
+
+def plot_scores(target, prev, out_dir):
+    fig, axes = plt.subplots(1, 2, figsize=(9, 3.2))
+    for ax, data, title in zip(
+        axes, (target, prev), ("Final position -> target B", "Previous-token attention")
+    ):
+        im = ax.imshow(data, cmap="viridis", vmin=0, vmax=1)
+        ax.set_title(title, fontsize=10)
+        ax.set_xlabel("head")
+        ax.set_ylabel("layer")
+        ax.set_xticks(range(data.shape[1]))
+        ax.set_yticks(range(data.shape[0]))
+        for (r, c), v in np.ndenumerate(data):
+            ax.text(c, r, f"{v:.2f}", ha="center", va="center", color="w" if v < 0.6 else "k")
+        fig.colorbar(im, ax=ax, fraction=0.046)
+    fig.tight_layout()
+    fig.savefig(os.path.join(out_dir, "head_scores.png"), dpi=160)
+    plt.close(fig)
+
+
+def plot_ablation(names, table, out_dir):
+    cols = list(CONDITIONS)
+    data = np.array([[table[n][c][0] for c in cols] for n in names])
+    fig, ax = plt.subplots(figsize=(5.5, 0.38 * len(names) + 1.5))
+    im = ax.imshow(data, cmap="viridis", vmin=0, vmax=1, aspect="auto")
+    ax.set_xticks(range(len(cols)))
+    ax.set_xticklabels(cols)
+    ax.set_yticks(range(len(names)))
+    ax.set_yticklabels(names)
+    for (r, c), v in np.ndenumerate(data):
+        ax.text(c, r, f"{v:.2f}", ha="center", va="center", color="w" if v < 0.6 else "k", fontsize=8)
+    ax.set_title(f"Accuracy after zero-ablation (chance = {CHANCE:.2f})", fontsize=10)
+    fig.colorbar(im, ax=ax, fraction=0.046)
+    fig.tight_layout()
+    fig.savefig(os.path.join(out_dir, "ablation_accuracy.png"), dpi=160)
+    plt.close(fig)
