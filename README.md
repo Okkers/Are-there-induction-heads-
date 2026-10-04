@@ -58,6 +58,10 @@ Test sets modify the distribution to separate hypotheses:
 
 Training loss converges to ~0.25 (not 0), as expected for a partly stochastic task: see `figures/training_loss.png`.
 
+
+
+**Attention Patterns**
+
 ## Model and training
 
 - Encoder-only transformer, hidden dim 64, 4 heads, 2 layers
@@ -83,13 +87,6 @@ python main.py        # trains the model, runs all tests, produces the figures
 | `main.py` | Runs the full pipeline |
 | `plot_results.py` | Produces the figures used in the write-up |
 
-## Limitations
-
-- **Behavioral evidence only.** Attention patterns were not inspected and heads were not ablated or patched, so no specific head is identified as an induction head.
-- **Single architecture and seed for training.** The reported standard deviations are over test resamples, not over independently trained models.
-- **No offset control on the standard condition.** Showing that a matching-prefix input *keeps* its accuracy under the same offset would more cleanly attribute the OOC-offset drop to the loss of a positional cue.
-- **Gap-length cliff.** Accuracy collapses beyond the training filler range; the claim that this is a training-distribution boundary was not tested by retraining on longer fillers.
-
 ## Possible extensions
 
 - Visualize layer-wise attention to look for the previous-token head → induction head composition described by Elhage et al.
@@ -100,7 +97,3 @@ python main.py        # trains the model, runs all tests, produces the figures
 
 - Elhage et al. (2021). [A Mathematical Framework for Transformer Circuits](https://transformer-circuits.pub/2021/framework/index.html).
 - Olsson et al. (2022). [In-context Learning and Induction Heads](https://arxiv.org/abs/2209.11895).
-
-## Author
-
-Oskar Lang Moesmand · [LinkedIn](https://www.linkedin.com/in/oskar-moesmand/)
